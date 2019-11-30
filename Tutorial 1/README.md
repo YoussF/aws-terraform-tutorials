@@ -38,7 +38,7 @@ We now have everything setup regarding AWS Authentification and we can now start
 ## AWS Provider, State and Validation
 In this part we are going to set up a AWS Provider as well as the Terraform State initialisation and finaly how we can perform code validation in Terraform. Before we can do anything we have to create a brand new directory and in it create a file named main.tf (the name does not realy matter).
 
-In this file, the first thing we need to do is tell Terraform that we want to use the [AWS Provider](https://www.terraform.io/docs/providers/aws/index.html). Now, for the AWS Provider to work properly it has to know the aws region that you wan to deploy on and also the authentification information.
+In this file, the first thing we need to do is tell Terraform that we want to use the [AWS Provider](https://www.terraform.io/docs/providers/aws/index.html). Now, for the AWS Provider to work properly it has to know the aws region that you wan to deploy on.
 
 ```hcl
 provider "aws"{
