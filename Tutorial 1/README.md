@@ -1,7 +1,7 @@
 # AWS-TERRAFORM-TUTORIAL 1
 In this tutorial we are going to use the version 0.12.7 of Terraform. We are going to create a very very simple [ec2](https://aws.amazon.com/en/ec2/) instance in AWS using nothing but [Terraform](https://www.terraform.io/). I will try to stay very informative, very direct, straight to the point. This means that in this tutorials we are not going to cover every single feature provided by Terraform. Later on other tutorials will be written to cover more advanced features such as different types of resources, modules, as well as how to origanize your code, etc... So don't panic there will be more to learn on Terraform in the future. For now, here are the topic that we are going to cover in this tutorial :
 - [AWS Admin IAM User setup and Access Tokens](#AWS-Admin-IAM-User-setup-and-Access-Tokens)
-- [AWS Provider, State and Validation](#AWS-Provider,-State-and-Validation)
+- [AWS Provider, terraform init, terraform plan, terraform validate](#AWS-Provider,-terraform-init,-terraform-plan,-terraform-validate)
 - [AWS VPC Resource and Terraform apply](#AWS-VPC-Resource-and-Terraform-apply)
 - [AWS IGW (Internet Gateway) and Subnets](#AWS-IGW-(Internet-Gateway)-and-Subnets)
 - [AWS Route table, NACL and Security Groups](#AWS-Route-table,-NACL-and-Security-Groups)
@@ -35,17 +35,48 @@ Default output format [None]:
 
 We now have everything setup regarding AWS Authentification and we can now start using Terraform with AWS.
 
-## AWS Provider, State and Validation
-In this part we are going to set up a AWS Provider as well as the Terraform State initialisation and finaly how we can perform code validation in Terraform. Before we can do anything we have to create a brand new directory and in it create a file named main.tf (the name does not realy matter).
+## AWS Provider, terraform init, terraform plan, terraform validate
+In this part we are going to set up a AWS Provider as well as initializing our terraform state. Finaly we are going to perform code validation. Before we can do anything we have to create a brand new directory and in it create a file named main.tf (the name does not realy matter).
 
 In this file, the first thing we need to do is tell Terraform that we want to use the [AWS Provider](https://www.terraform.io/docs/providers/aws/index.html). Now, for the AWS Provider to work properly it has to know the aws region that you wan to deploy on.
 
 ```hcl
 provider "aws"{
-  profile = "default"
   region  = "eu-west-3"
 }
 ```
+Now, since we have our first terraform code, it's time to initialize our workspace directory with ```terraform init```
+```bash
+$ terraform init                                                                  
+                                                                                  
+Initializing the backend...                                                       
+                                                                                  
+Initializing provider plugins...                                                  
+- Checking for available provider plugins...                                      
+- Downloading plugin for provider "aws" (hashicorp/aws) 2.40.0...                 
+                                                                                  
+The following providers do not have any version constraints in configuration,     
+so the latest version was installed.                                              
+                                                                                  
+To prevent automatic upgrades to new major versions that may contain breaking     
+changes, it is recommended to add version = "..." constraints to the              
+corresponding provider blocks in configuration, with the constraint strings       
+suggested below.                                                                  
+                                                                                  
+* provider.aws: version = "~> 2.40"                                               
+                                                                                  
+Terraform has been successfully initialized!                                      
+                                                                                  
+You may now begin working with Terraform. Try running "terraform plan" to see     
+any changes that are required for your infrastructure. All Terraform commands     
+should now work.                                                                  
+                                                                                  
+If you ever set or change modules or backend configuration for Terraform,         
+rerun this command to reinitialize your working directory. If you forget, other   
+commands will detect it and remind you to do so if necessary.                     
+```
+This command performs several different initialization steps in order to prepare a working directory for use. During init, Terraform searches the configuration for both direct and indirect references to providers and attempts to load the required plugins. init will automatically download and install plugins if necessary.
+
 
 ## AWS VPC Resource and Terraform apply
 
