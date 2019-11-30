@@ -10,7 +10,7 @@ In this tutorial we are going to use the version 0.12.7 of Terraform. We are goi
 - [Terraform destroy](#Terraform-destroy)
 
 ## AWS Admin IAM User setup and Access Tokens
-Before Terraform can interact with AWS, we need to create a dedicated user within AWS that that has Programatic access and give this user administrative permission. Finaly we will have to grab the access tokens.
+Before Terraform can interact with AWS, we need to **create** a dedicated **user** within AWS **with Programatic access and** give this user **administrative permission**. Finaly we will have to grab the **Access Tokens**.
 Here are the steps :
 - Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.
 - In the navigation pane, choose **Users** and then choose **Add user**.![](assets/aws-new-programatic-user-step1.png)
@@ -22,6 +22,18 @@ Select **Programmatic access**. This creates an access key for each new user. Yo
 - Choose **Next: Tags –> Next: Review** to see all of the choices you made up to this point. When you are ready to proceed, choose **Create user**.
 - To view the users’ access keys (access key IDs and secret access keys), choose **Show** next to each password and access key that you want to see. To save the access keys, choose **Download .csv** and then save the file to a safe location. **You will not have access to the secret keys again after this step**.![](assets/aws-new-programatic-user-step4.png)
 
+Since it is a very bas pratice to save creadentials in a configuration file, we must use what is known in Terraform as a [Shared Credentials file](https://www.terraform.io/docs/providers/aws/index.html#shared-credentials-file). To generate this file we will use the [AWS Command Line Interface](https://aws.amazon.com/en/cli). Once installed using python packages manager pip, simply run ```aws configure``` and provide the 'Key ID' and 'Secret Access Key' when prompted.
+
+```
+$ sudo pip install awscli
+$ aws configure
+AWS Access Key ID [None]: *********************
+AWS Secret Access Key [None]: *******************
+Default region name [None]:
+Default output format [None]:
+```
+
+We now have everything setup regarding AWS Authentification and we can now start using Terraform with AWS.
 
 ## AWS Provider, State and Validation
 In this part we are going to set up a AWS Provider as well as the Terraform State initialisation and finaly how we can perform code validation in Terraform. Before we can do anything we have to create a brand new directory and in it create a file named main.tf (the name does not realy matter).
