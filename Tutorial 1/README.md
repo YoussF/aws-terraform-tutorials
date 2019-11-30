@@ -1,9 +1,9 @@
 # AWS-TERRAFORM-TUTORIAL 1
-In this tutorial we are going to use the version 0.12.7 of Terraform. We are going to create a very very simple [ec2](https://aws.amazon.com/en/ec2/) instance in AWS using nothing but [Terraform](https://www.terraform.io/). I will try to stay very informative, very direct, straight to the point. This means that in this tutorials we are not going to cover every single feature provided by Terraform. Later on other tutorials will be written to cover more advanced features such as different types of resources, modules, as well as how to origanize your code, etc... So don't panic there will be more to learn on Terraform in the future. For now, here are the topic that we are going to cover in this tutorial :
+In this tutorial we are going to use the version 0.12.7 of Terraform. We are going to create a very simple [ec2](https://aws.amazon.com/en/ec2/) instance in AWS using nothing but [Terraform](https://www.terraform.io/). I will try to stay very informative and straight to the point. This means that in this tutorials we are not going to cover every single feature provided by Terraform. Later on other tutorials will be written to cover more advanced features such as different types of resources, modules, as well as how to origanize your code, etc... So don't panic there will be more to learn on Terraform in the future. For now, here are the topics that we are going to cover in this tutorial :
 
 ## Roadmap
 - [AWS Admin IAM User setup and Access Tokens](#AWS-Admin-IAM-User-setup-and-Access-Tokens)
-- [AWS Provider, terraform init, terraform plan, terraform validate](#AWS-Provider,-terraform-init,-terraform-plan,-terraform-validate)
+- [AWS Provider, terraform init, terraform validate, terraform plan](#AWS-Provider,-terraform-init,-terraform-validate,-terraform-plan)
 - [AWS VPC Resource and terraform apply](#AWS-VPC-Resource-and-terraform-apply)
 - [AWS IGW (Internet Gateway) and Subnets](#AWS-IGW-(Internet-Gateway)-and-Subnets)
 - [AWS Route table, NACL and Security Groups](#AWS-Route-table,-NACL-and-Security-Groups)
@@ -37,7 +37,7 @@ Default output format [None]:
 
 We now have everything setup regarding AWS Authentification and we can now start using Terraform with AWS.
 
-## AWS Provider, terraform init, terraform plan, terraform validate
+## AWS Provider, terraform init, terraform validate, terraform plan
 In this part we are going to set up a AWS Provider as well as initializing our terraform state. Finaly we are going to perform code validation. Before we can do anything we have to create a brand new directory and in it create a file named main.tf (the name does not realy matter).
 
 In this file, the first thing we need to do is tell Terraform that we want to use the [AWS Provider](https://www.terraform.io/docs/providers/aws/index.html). Now, for the AWS Provider to work properly it has to know the aws region that you wan to deploy on.
@@ -79,7 +79,14 @@ commands will detect it and remind you to do so if necessary.
 ```
 This command performs several different initialization steps in order to prepare a working directory for use. During init, Terraform searches the configuration for both direct and indirect references to providers and attempts to load the required plugins. init will automatically download and install plugins if necessary.
 
-Next let's perform a ```terraform plan``` as suggestedto see any changes that are required in our infrastructure. 
+Next, let's perform a ```terraform validate```. Validate runs checks that verify whether a configuration is syntactically valid and internally consistent.
+
+```
+$ terraform validate
+Success! The configuration is valid.
+```
+
+Last but not least we can run ```terraform plan``` to see any changes that are required in our infrastructure. 
 
 ```
 $ terraform plan
@@ -96,7 +103,9 @@ This means that Terraform did not detect any differences between your
 configuration and real physical resources that exist. As a result, no
 actions need to be performed.
 ```
-This command is a convenient way to check whether the execution plan for a set of changes matches your expectations without making any changes to real resources or to the state.
+This command is a convenient way to check whether the execution plan for a set of changes matches your expectations without making any changes to real resources or to the state. Since we didn't declared any ressource yet in our main.tf, there is no differences between our configuration and the real physical resources.
+
+
 
 ## AWS VPC Resource and Terraform apply
 
