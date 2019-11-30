@@ -1,8 +1,10 @@
 # AWS-TERRAFORM-TUTORIAL 1
 In this tutorial we are going to use the version 0.12.7 of Terraform. We are going to create a very very simple [ec2](https://aws.amazon.com/en/ec2/) instance in AWS using nothing but [Terraform](https://www.terraform.io/). I will try to stay very informative, very direct, straight to the point. This means that in this tutorials we are not going to cover every single feature provided by Terraform. Later on other tutorials will be written to cover more advanced features such as different types of resources, modules, as well as how to origanize your code, etc... So don't panic there will be more to learn on Terraform in the future. For now, here are the topic that we are going to cover in this tutorial :
+
+## Roadmap
 - [AWS Admin IAM User setup and Access Tokens](#AWS-Admin-IAM-User-setup-and-Access-Tokens)
 - [AWS Provider, terraform init, terraform plan, terraform validate](#AWS-Provider,-terraform-init,-terraform-plan,-terraform-validate)
-- [AWS VPC Resource and Terraform apply](#AWS-VPC-Resource-and-Terraform-apply)
+- [AWS VPC Resource and terraform apply](#AWS-VPC-Resource-and-terraform-apply)
 - [AWS IGW (Internet Gateway) and Subnets](#AWS-IGW-(Internet-Gateway)-and-Subnets)
 - [AWS Route table, NACL and Security Groups](#AWS-Route-table,-NACL-and-Security-Groups)
 - [Elastic IP, SSH KEY and Dynamic AMI](#Elastic-IP,-SSH-KEY-and-Dynamic-AMI)
@@ -77,6 +79,24 @@ commands will detect it and remind you to do so if necessary.
 ```
 This command performs several different initialization steps in order to prepare a working directory for use. During init, Terraform searches the configuration for both direct and indirect references to providers and attempts to load the required plugins. init will automatically download and install plugins if necessary.
 
+Next let's perform a ```terraform plan``` as suggestedto see any changes that are required in our infrastructure. 
+
+```
+$ terraform plan
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+
+------------------------------------------------------------------------
+
+No changes. Infrastructure is up-to-date.
+
+This means that Terraform did not detect any differences between your
+configuration and real physical resources that exist. As a result, no
+actions need to be performed.
+```
+This command is a convenient way to check whether the execution plan for a set of changes matches your expectations without making any changes to real resources or to the state.
 
 ## AWS VPC Resource and Terraform apply
 
